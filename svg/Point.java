@@ -29,6 +29,13 @@ public class Point {
         p.y = y + dy;
         return p;
     }
+    public Point translated2(double dx, double dy)
+    {
+        Point p = new Point();
+        p.x = x + dx;
+        p.y = y + dy;
+        return p;
+    }
 
 }
 
