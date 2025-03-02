@@ -4,6 +4,6 @@ public class prog2
 {
     public static void main(String[] args)
     {
-        System.out.println("ACAB");
+        System.out.println("ACAB HWDP");
     }
 }
