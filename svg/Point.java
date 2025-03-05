@@ -5,6 +5,12 @@ public class Point {
     public double x;
     public double y;
 
+    public Point(double x, double y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
     
     public String toString()
     {
@@ -24,7 +30,7 @@ public class Point {
 
     public Point translated(double dx, double dy)
     {
-        Point p = new Point();
+        Point p= new Point(x, y);
         p.x = x + dx;
         p.y = y + dy;
         return p;
