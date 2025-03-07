@@ -1,4 +1,3 @@
-
 import java.util.Locale;
 
 public class Point {
@@ -9,6 +8,11 @@ public class Point {
     {
         this.x = x;
         this.y = y;
+    }
+
+    public Point()
+    {
+       
     }
 
     public Point(Point oldPoint)
