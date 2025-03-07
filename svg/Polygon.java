@@ -33,7 +33,7 @@ public class Polygon
         return "Polygon{" + "points=" + Arrays.toString(points) + '}';
     }
 
-    public String toSVG()
+    public String toSvg()
     {
         String pointsString = "";
         for(Point p : points)
