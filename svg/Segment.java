@@ -23,8 +23,6 @@ public class Segment {
                 Longest = s;
             }
         }
-
         return Longest;
     }
-
 }
