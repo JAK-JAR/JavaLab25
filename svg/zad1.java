@@ -1,5 +1,13 @@
 public class zad1 {
-    public static void main(String[] args)
+    
+    public static void main(String[] args) 
+    {
+        OldCode();
+        polygons();
+        
+    }
+    
+    public static void OldCode()
     {
         Point p = new Point(5,7);
 
@@ -29,5 +37,17 @@ public class zad1 {
         Segment LongestSegment = Segment.FindLongestSegment(segments);
         System.out.println("Longest segment lenght: " + LongestSegment.lenght());
 
+        
+    }
+
+    public static void polygons()
+    {
+        Point[] points = new Point[3];
+        points[0] = new Point(10,50);
+        points[1] = new Point(100,200);
+        points[2] = new Point(150,350);
+
+        Polygon polygon = new Polygon(points);
+        System.out.println(polygon);
     }
 }
