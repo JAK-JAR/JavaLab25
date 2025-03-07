@@ -1,16 +1,16 @@
 public class Segment {
-    public Point a;
-    public Point b;
+    private Point a;
+    private Point b;
 
     public Segment(Point a, Point b)
     {
-        this.a = a;
-        this.b = b;
+        this.a = new Point(a);
+        this.b = new Point(b);
     }
     
     public double lenght()
     {
-        return Math.hypot(a.x-b.x, a.y-b.y);
+        return Math.hypot(a.getX()-b.getX(), a.getY()-b.getY());
     }
 
     public static Segment FindLongestSegment(Segment[] segments)
