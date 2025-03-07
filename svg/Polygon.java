@@ -24,4 +24,5 @@ public class Polygon
         }
         return String.format(Locale.ENGLISH, "<polygon points=\"%s\" style=\"fill:lime;stroke:purple;stroke-width:3\" />", pointsString);
     }
+    
 }
