@@ -43,7 +43,7 @@ public class Polygon
         return String.format(Locale.ENGLISH, "<polygon points=\"%s\" style=\"fill:lime;stroke:purple;stroke-width:3\" />", pointsString);
     }
 
-    public BoundingBox()
+    public BoundingBox boundingbox()
     {
         double xMin = this.points[0].getX();
         double xMax = this.points[0].getX();
@@ -57,7 +57,7 @@ public class Polygon
             yMin = Math.min(yMin, points[i].getY());
             yMax = Math.max(yMax, points[i].getY());
         }
-        return new BoundingBox(xMin, yMin, xMax-xMin, yMax-yMin);
+        return new BoundingBox(xMin, yMin, xMax - xMin, yMax - yMin);
     }
 
 }
