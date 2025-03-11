@@ -58,6 +58,7 @@ public class Polygon
             yMax = Math.max(yMax, points[i].getY());
         }
         return new BoundingBox(xMin, yMin, xMax - xMin, yMax - yMin);
+        
     }
 
 }
