@@ -2,9 +2,9 @@ import java.util.Locale;
 
 public class Style 
 {
-    public String fillColor;
-    public String strokeColor;
-    public double strokeWidth;
+    public final String fillColor;
+    public final String strokeColor;
+    public final double strokeWidth;
 
     public Style(String fillColor, String strokeColor, double strokeWidth) 
     {

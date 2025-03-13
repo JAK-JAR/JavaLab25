@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Locale;
 
-public class Polygon 
+public class Polygon extends Shape
 {
     private Point[] points;
     private Style style;
@@ -22,12 +22,11 @@ public class Polygon
 
     public Polygon(Point[] points, Style style)
     {
+        super(style);
         this.points = new Point[points.length];
-        for(int i = 0; i < points.length; i++)
-        {
+        for (int i = 0; i < points.length; i++) {
             this.points[i] = new Point(points[i]);
         }
-        this.style = style;
     }
 
     public Polygon(Point[] points)
@@ -35,19 +34,21 @@ public class Polygon
         this(points, new Style("none", "black", 1.0));
     }
 
+    @Override
     public String toString()
     {
         return "Polygon{" + "points=" + Arrays.toString(points) + '}';
     }
 
+    @Override
     public String toSvg()
     {
-        String pointsString = "";
+        StringBuilder pointsString = new StringBuilder();
         for(Point p : points)
         {
-            pointsString += p.getX() + "," + p.getY() + " ";
+            pointsString.append(p.getX()).append(",").append(p.getY()).append(" ");
         }
-        return String.format(Locale.ENGLISH, "<polygon points=\"%s\" style=\"fill:lime;stroke:purple;stroke-width:3\" />", pointsString);
+        return String.format(Locale.ENGLISH, "<polygon points=\"%s\" style=\"fill:lime;stroke:purple;stroke-width:3\" />", pointsString.toString().trim(), style.toSvg());
     }
 
     public BoundingBox boundingBox()
