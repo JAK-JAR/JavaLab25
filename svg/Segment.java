@@ -26,4 +26,5 @@ public class Segment {
         }
         return Longest;
     }
+    
 }

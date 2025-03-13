@@ -8,6 +8,5 @@ public abstract class Shape
     }
 
     public abstract String toSvg();
-    
     public abstract BoundingBox boundingBox();
 }

@@ -20,7 +20,8 @@ public class Elipse extends Shape {
     }
 
     @Override
-    public BoundingBox boundingBox() {
+    public BoundingBox boundingBox() 
+    {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'boundingBox'");
     }

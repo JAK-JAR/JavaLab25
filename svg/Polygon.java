@@ -67,6 +67,7 @@ public class Polygon extends Shape
         }
         return new BoundingBox(xMin, yMin, xMax - xMin, yMax - yMin);
     }
+    
     public static Polygon square(Line line, Style style) 
     {
         Point a = line.getA();
