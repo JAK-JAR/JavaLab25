@@ -81,5 +81,4 @@ public class Polygon extends Shape
         Point[] points = { a, b, c, d, a };
         return new Polygon(points, style);
     }
-
 }

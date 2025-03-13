@@ -16,6 +16,7 @@ public class Segment {
     public static Segment FindLongestSegment(Segment[] segments)
     {
         Segment Longest = segments[0];
+        
         for(Segment s : segments)
         {
             if(s.lenght() > Longest.lenght())

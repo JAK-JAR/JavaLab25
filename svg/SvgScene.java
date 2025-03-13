@@ -62,6 +62,7 @@ public class SvgScene {
         // Zapisuje zawartość SVG do pliku
         try (FileWriter writer = new FileWriter(filePath)) {
             writer.write(svgContent.toString());
+            
         }
     }
 }

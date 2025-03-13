@@ -24,5 +24,4 @@ public class Elipse extends Shape {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'boundingBox'");
     }
-    
 }

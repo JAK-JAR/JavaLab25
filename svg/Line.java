@@ -31,7 +31,7 @@ public class Line
         return new Line(c, d);
     }
 
-    // Przeciążona metoda zwracająca prostopadły odcinek o zadanej długości
+    // Przeciążona metoda zwracająca prostopadły odcinek o zadanej długości 
     public Line perpendicular(double length) {
         double dx = b.getX() - a.getX();
         double dy = b.getY() - a.getY();

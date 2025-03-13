@@ -17,5 +17,4 @@ public class Style
     {
         return String.format(Locale.ENGLISH, "style=\"fill:%s;stroke:%s;stroke-width:%f\"", fillColor, strokeColor, strokeWidth);
     }
-
 }
