@@ -4,6 +4,7 @@ import java.util.Locale;
 public class Polygon 
 {
     private Point[] points;
+    private Style style;
     
     // public Polygon(Point[] points)
     // {
@@ -19,13 +20,19 @@ public class Polygon
     //     }
     // }
 
-    public Polygon(Point[] points)
+    public Polygon(Point[] points, Style style)
     {
         this.points = new Point[points.length];
         for(int i = 0; i < points.length; i++)
         {
             this.points[i] = new Point(points[i]);
         }
+        this.style = style;
+    }
+
+    public Polygon(Point[] points)
+    {
+        this(points, new Style("none", "black", 1.0));
     }
 
     public String toString()
@@ -58,7 +65,20 @@ public class Polygon
             yMax = Math.max(yMax, points[i].getY());
         }
         return new BoundingBox(xMin, yMin, xMax - xMin, yMax - yMin);
-        
+    }
+    public static Polygon square(Line line, Style style) 
+    {
+        Point a = line.getA();
+        Point b = line.getB();
+
+        double dx = b.getX() - a.getX();
+        double dy = b.getY() - a.getY();
+
+        Point c = new Point(b.getX() - dy, b.getY() + dx);
+        Point d = new Point(a.getX() - dy, a.getY() + dx);
+
+        Point[] points = { a, b, c, d, a };
+        return new Polygon(points, style);
     }
 
 }
