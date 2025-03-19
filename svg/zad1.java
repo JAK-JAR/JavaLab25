@@ -4,7 +4,8 @@ public class zad1 {
     {
         OldCode();
         polygons();
-        
+        testText();
+        testElipse();
     }
     
     public static void OldCode()
