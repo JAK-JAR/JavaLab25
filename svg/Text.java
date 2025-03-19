@@ -22,7 +22,6 @@ public class Text extends Shape {
 
     @Override
     public BoundingBox boundingBox() {
-        // TODO Auto-generated method stub
         return new BoundingBox(position.getX(), position.getY(), textLength, fontSize);
     }
 
