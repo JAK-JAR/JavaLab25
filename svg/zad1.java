@@ -50,4 +50,22 @@ public class zad1 {
         Polygon polygon = new Polygon(points);
         System.out.println(polygon);
     }
+
+    public static void testText() {
+        Point position = new Point(50, 50);
+        Style style = new Style("fill:blue", "stroke:black", 1.0);
+        Text text = new Text("Hello, SVG!", position, 100, 20, style);
+
+        System.out.println(text.toSvg());
+        System.out.println(text.boundingBox());
+    }
+
+    public static void testElipse() {
+        Point middle = new Point(50, 50);
+        Style style = new Style("fill:blue", "stroke:black", 1.0);
+        Elipse elipse = new Elipse(middle, 40, 20, style);
+
+        System.out.println(elipse.toSvg());
+        System.out.println(elipse.boundingBox());
+    }
 }
