@@ -23,6 +23,8 @@ public class Main {
                 new Vec2(600, 260)
         });
 
+        SolidFillShapeDecorator redPentagon = new SolidFillShapeDecorator(pentagon, "red");
+
         Ellipse ellipse = new Ellipse(new Vec2(500, 700), 400, 100);
 
         SvgScene scene = new SvgScene();
