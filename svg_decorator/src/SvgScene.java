@@ -31,7 +31,7 @@ public class SvgScene {
         for(var shape : shapes) {
             if(shape ==  null)
                 continue;
-            result += "\n\t" + shape.toSvg();
+            result += "\n\t" + shape.toSvg("");
         }
         result += "\n</svg>";
         return result;

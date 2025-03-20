@@ -26,7 +26,7 @@ public class Polygon implements Shape{
         return new BoundingBox(xMin, yMin, xMax - xMin, yMax - yMin);
     }
 
-    public String toSvg()    {
+    public String toSvg(String inputSvg)    {
         String pointsString = "";
         for(Vec2 point : points) {
             pointsString += point.x() + "," + point.y() + " ";
