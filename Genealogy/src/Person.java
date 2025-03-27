@@ -1,8 +1,10 @@
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-public class Person
+public class Person implements Comparable<Person>
 {
     private String firstName;
     private String lastName;
@@ -18,7 +20,12 @@ public class Person
     }
     @Override
     public String toString() {
-        return firstName + " " + lastName + " (" + birthDate + ")";
+        return "Person{" +
+                "name='" + firstName + '\'' +
+                ", surname='" + lastName + '\'' +
+                ", birth=" + birthDate +
+                ", children=" + children +
+                '}';
     }
 
     public boolean adopt(Person child)
@@ -35,18 +42,22 @@ public class Person
         if(children.isEmpty())
             return null;
 
-        Person youngest = null;
-        for(Person c : children)
-        {
-            if(youngest == null || c.birthDate.isAfter(youngest.birthDate))
-            {
-                youngest = c;
-            }
-        }
-        return youngest;
+        return Collections.max(children);
     }
 
+    public List<Person> getChildren()
+    {
+        return children.stream().sorted().toList();
+    }
 
+    @Override
+    public int compareTo(Person other)
+    {
+        return this.birthDate.compareTo(other.birthDate);
+    }
 
-
+    public String getFullName()
+    {
+        return firstName + ' ' + lastName;
+    }
 }
