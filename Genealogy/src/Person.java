@@ -31,9 +31,8 @@ public class Person implements Comparable<Person>
     public boolean adopt(Person child)
     {
         if (this == child)
-        {
             return false;
-        }
+
         return children.add(child);
     }
 

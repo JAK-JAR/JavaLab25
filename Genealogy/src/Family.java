@@ -23,8 +23,6 @@ public class Family
 
     public List<Person> get(String key)
     {
-        List<Person> members = family.get(key, new ArrayList<>());
-        Collections.sort(members);
-        return members;
+        return family.getOrDefault(key, new ArrayList<>()).stream().sorted().toList();
     }
 }
