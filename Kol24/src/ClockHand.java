@@ -8,5 +8,5 @@ public abstract class ClockHand {
     }
 
     public abstract String toSvg(LocalTime time);
-    }
+
 }
