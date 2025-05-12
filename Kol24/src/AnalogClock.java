@@ -1,6 +1,19 @@
-public class AnalogClock extends Clock {
-    public int hours, minutes, seconds;
+import java.util.List;
 
+public class AnalogClock extends Clock {
+    private final List<ClockHand> hands;
+
+    public AnalogClock(City city) {
+        super(city);
+        hands = List.of(
+                new HourHand();
+                new MinuteHand();
+                new SecondHand();
+        );
+    }
+
+
+    @Override
     public void toSvg (String filePath) {
         if(filePath == null || filePath.isEmpty()) {
             throw new IllegalArgumentException("Wrong file path!");
@@ -19,7 +32,7 @@ public class AnalogClock extends Clock {
             stroke-dasharray="6 17.56194490192345"
             stroke-dashoffset="3"
             fill="none"
-                    />
+                    /> + this.HourHand.toSvg() + this.MinuteHand.toSvg() + this.SecondHand.toSvg() + "<svg/>";
         }
     }
 }

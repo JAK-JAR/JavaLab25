@@ -86,13 +86,28 @@ public class City {
         return meanTime;
     }
 
-    public static Comparator<City> {
-        return (city1 - city2) -> {
-            double diff1 = Math.abs(city1.longitude/15 - city1.timeZone);
-            double diff2 = Math.abs(city1.longitude/15 - city2.timeZone);
+    public static Comparator<City> worstTimeZoneFit() {
+        return (city1, city2) -> {
+            double diff1 = Math.abs(city1.longitude / 15.0 - city1.timeZone);
+            double diff2 = Math.abs(city2.longitude / 15.0 - city2.timeZone);
             return Double.compare(diff2, diff1);
-        }
+        };
     }
 
-
+    public static void generateAnalogClocksSvg(List<City> cities, AnalogClock clock) {
+        Path dir = Paths.get(clock.toString());
+        try {
+            Files.createDirectories(dir);
+            for (City c : cities) {
+                clock.setCity(c);
+                String svg = clock.toSvg();
+                Path file = dir.resolve(c.getCapital() + ".txt");
+                Files.writeString(file, svg);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Nie można zapisać plików SVG: " + e.getMessage(), e);
+        }
+    }
 }
+
+
