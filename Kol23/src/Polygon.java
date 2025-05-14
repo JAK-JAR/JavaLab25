@@ -16,11 +16,11 @@ public class Polygon {
         int counter = 0;
         double a, b, d, x1, y1, x2, y2;
 
-        for(int i = 0; i < this.points.size() - 2; i++) {
+        for(int i = 0; i < this.points.size(); i++) {
             x1 = points.get(i).x();
-            x2 = points.get(i+1).x();
+            x2 = points.get((i+1) % points.size()).x();
             y1 = points.get(i).y();
-            y2 = points.get(i+1).y();
+            y2 = points.get((i+1) % points.size()).y();
             if(y1 > y2) {
                 double tmpx = x1, tmpy = y1;
                 x1 = x2;
@@ -28,7 +28,7 @@ public class Polygon {
                 x2 = tmpx;
                 y2 = tmpy;
             }
-            if(y1 < p.y() < y2) {
+            if(y1 < p.y() && p.y() < y2) {
                 d = x2 - x1;
                 if(d == 0) {
                     x = x1;
@@ -43,34 +43,5 @@ public class Polygon {
                 }
             }
         }
-        x1 = points.get(points.size()-1).x();
-        y1 = points.get(points.size()-1).y();
-        x2 = points.get(0).x();
-        y2 = points.get(0).y();
-        if(y1 > y2) {
-            double tmpx = x1, tmpy = y1;
-            x1 = x2;
-            y1 = y2;
-            x2 = tmpx;
-            y2 = tmpy;
-        }
-        if(y1 < p.y() < y2) {
-            d = x2 - x1;
-            if(d == 0) {
-                x = x1;
-            }
-            else {
-                a = (y2 - y1) / d;
-                b = y1 - a * x1;
-                x = (p.y() - b) / a;
-                if(x < p.x()) {
-                    counter++;
-                }
-            }
-        }
-    }
-    if((counter % 2) == 0) {
-        return false
-    }
-    else return true;
+    return (counter % 2) != 0;
 }
