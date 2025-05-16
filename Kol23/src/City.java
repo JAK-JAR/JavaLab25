@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class City extends Polygon {
     private String name;
@@ -8,6 +9,10 @@ public class City extends Polygon {
     private List<Point> points;
     public boolean port;
     public Set<Resource.Type> resources = new HashSet<>();
+
+    public String getName() {
+        return name;
+    }
 
     public City(Point center, String name, double wallLength, boolean port) {
         List<Point> newPoints = new ArrayList<Point>();

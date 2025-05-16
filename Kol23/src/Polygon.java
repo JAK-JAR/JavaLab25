@@ -5,20 +5,19 @@ public class Polygon {
     private List<Point> points;
     boolean port;
 
-    public Polygon(List<Point> points) {
+    public Polygon(List<Point> points, boolean port) {
         List<Point> newPoints = new ArrayList<Point>();
-        boolean isPort = false;
-        for (Point p : points) {
-            if(!p.isOnLand()) isPort = true;
-            newPoints.add(p);
-        }
+        boolean isPort = port;
         this.points = newPoints;
         this.port = isPort;
     }
 
+    public Polygon() {
+    }
+
     public boolean inside(Point p) {
         int counter = 0;
-        double a, b, d, x x1, y1, x2, y2;
+        double a, b, d, x, x1, y1, x2, y2;
 
         for (int i = 0; i < this.points.size(); i++) {
             x1 = points.get(i).x();

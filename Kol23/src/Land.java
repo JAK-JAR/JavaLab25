@@ -2,24 +2,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Land extends Polygon {
-        private List<Point> points = new ArrayList<Point>();
-        private List<City> cities = new ArrayList<Point>();
+        private List<Point> points;
+        private List<City> cities;
         private boolean port;
 
-        public Land(List<Point> points) {
+        public Land(List<Point> points, List<City> cities, boolean port) {
             List<Point> newPoints = new ArrayList<Point>();
-            bollean isPort = false;
             for(Point p : points) {
-                if(!p.isOnLand()) isPort = true;
                 newPoints.add(p);
             }
+            List<City> newCities = new ArrayList<City>();
+            for(City c : cities) {
+                newCities.add(c);
+            }
+            this.cities = newCities;
             this.points = newPoints;
-            this.port = isPort;
+            this.port = port;
         }
 
     public boolean inside(Point p) {
         int counter = 0;
-        double a, b, d, x1, y1, x2, y2;
+        double a, b, d, x, x1, y1, x2, y2;
 
         for(int i = 0; i < this.points.size(); i++) {
             x1 = points.get(i).x();
@@ -55,7 +58,7 @@ public class Land extends Polygon {
             if(inside(city.center)) {
                 this.cities.add(city);
             }
-            else throw new RuntimeException(String.format("Cannot add %s", city.name));
+            else throw new RuntimeException(String.format("Cannot add %s", city.getName()));
     }
 
 }
