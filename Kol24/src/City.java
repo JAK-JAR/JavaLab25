@@ -1,10 +1,11 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class City {
     public String capital;
@@ -81,7 +82,7 @@ public class City {
         double offset = this.longitude / 15;
         int hoursToAdd = (int) offset;
         double franctionOfHours = offset - hoursToAdd;
-        int secondsToAdd = Math.round(franctionOfHours * 3600);
+        long secondsToAdd = Math.round(franctionOfHours * 3600);
         LocalTime meanTime = zoneTime.plusHours(hoursToAdd).plusSeconds(secondsToAdd);
         return meanTime;
     }
@@ -100,9 +101,7 @@ public class City {
             Files.createDirectories(dir);
             for (City c : cities) {
                 clock.setCity(c);
-                String svg = clock.toSvg();
-                Path file = dir.resolve(c.getCapital() + ".txt");
-                Files.writeString(file, svg);
+                clock.toSvg(c.getCapital() + ".txt");
             }
         } catch (IOException e) {
             throw new RuntimeException("Nie można zapisać plików SVG: " + e.getMessage(), e);

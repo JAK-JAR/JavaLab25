@@ -7,6 +7,6 @@ public abstract class ClockHand {
         this.time = time;
     }
 
-    public abstract String toSvg(LocalTime time);
+    public abstract String toSvg();
 
 }

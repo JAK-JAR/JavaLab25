@@ -38,4 +38,5 @@ public abstract class Clock {
     }
 
 
+    public abstract void toSvg(String filePath) throws Exception;
 }

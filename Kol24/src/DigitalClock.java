@@ -56,4 +56,9 @@ public class DigitalClock extends Clock {
             }
         }
     }
+
+    @Override
+    public void toSvg(String filePath) {
+
+    }
 }

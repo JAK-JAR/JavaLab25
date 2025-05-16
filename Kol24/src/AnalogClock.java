@@ -6,7 +6,7 @@ public class AnalogClock extends Clock {
     private final List<ClockHand> hands;
 
     public AnalogClock(City city) {
-        super(city);
+        super.setCity(city);
         hands = List.of(
                 new HourHand(),
                 new MinuteHand(),
