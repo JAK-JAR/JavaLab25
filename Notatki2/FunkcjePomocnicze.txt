@@ -1,0 +1,72 @@
+Przydatne klasy i funkcje w Javie
+1. PreparedStatement
+
+Jak wyżej – najważniejsza klasa do SQL w Javie.
+Używasz jej zamiast sklejać stringi.
+👉 Główne metody:
+
+setString(int, String) – wstawia tekst.
+
+setInt(int, int) – wstawia liczbę.
+
+executeQuery() – SELECT.
+
+executeUpdate() – INSERT/UPDATE/DELETE.
+
+2. StringBuilder
+
+W Javie stringi są niezmienne (immutable).
+Jeśli robisz dużo konkatenacji (text = text + "coś"), to jest nieefektywne.
+Do tego używamy StringBuilder:
+
+StringBuilder sb = new StringBuilder();
+sb.append("Hello ");
+sb.append("World!");
+String result = sb.toString();
+
+
+✅ Dużo szybsze i lepsze, gdy tworzysz duże stringi (np. generujesz raporty, budujesz zapytania SQL, tworzysz plik).
+
+3. Map, List, Set
+
+Przy bazach danych bardzo przydatne są kolekcje:
+
+List – lista wyników.
+
+Map – np. ranking graczy (login → punkty).
+
+Set – zbiór unikalnych wartości.
+
+Przykład rankingu z bazy:
+
+Map<String, Integer> leaderboard = new LinkedHashMap<>();
+while (rs.next()) {
+    leaderboard.put(rs.getString("login"), rs.getInt("points"));
+}
+
+4. try-with-resources
+
+Żeby nie trzeba było ręcznie zamykać połączeń (conn.close(), st.close()), używa się:
+
+try (PreparedStatement st = conn.prepareStatement("SELECT * FROM users")) {
+    ResultSet rs = st.executeQuery();
+    // ...
+} catch (SQLException e) {
+    e.printStackTrace();
+}
+
+
+📌 Automatycznie zamknie zasoby po zakończeniu bloku.
+
+5. Logger zamiast System.out
+
+Do większych projektów zamiast System.out.println używa się Logger.
+
+import java.util.logging.Logger;
+
+Logger logger = Logger.getLogger("MyServer");
+logger.info("Serwer uruchomiony!");
+logger.warning("Błąd logowania!");
+
+
+Dzięki temu logi można filtrować i zapisywać do pliku.

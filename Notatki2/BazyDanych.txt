@@ -1,0 +1,79 @@
+Połączenie z bazą danych
+
+W Javie używa się JDBC (Java Database Connectivity).
+
+Potrzebna jest biblioteka JDBC dla Twojej bazy (np. SQLite, MySQL, PostgreSQL).
+
+Tworzymy połączenie:
+
+Connection conn = DriverManager.getConnection("jdbc:sqlite:mydb.db");
+
+
+📌 To tworzy połączenie z plikiem mydb.db w SQLite.
+
+2. Wykonywanie zapytań – Statement
+
+Do prostych zapytań można użyć Statement:
+
+Statement st = conn.createStatement();
+ResultSet rs = st.executeQuery("SELECT * FROM users");
+
+
+executeQuery(sql) – do SELECT (zwraca wynik w ResultSet).
+
+executeUpdate(sql) – do INSERT, UPDATE, DELETE (zwraca liczbę zmodyfikowanych wierszy).
+
+3. PreparedStatement – bezpieczne zapytania
+
+Najczęściej używana i bardzo ważna klasa.
+Pozwala wstawiać parametry ? do SQL, zamiast ręcznie budować stringa.
+
+Przykład logowania:
+
+PreparedStatement st = conn.prepareStatement(
+    "SELECT * FROM users WHERE login = ? AND password = ?"
+);
+st.setString(1, "admin");
+st.setString(2, "1234");
+ResultSet rs = st.executeQuery();
+
+
+✅ Zalety:
+
+Chroni przed SQL Injection.
+
+Można wielokrotnie wykonywać zapytanie z różnymi parametrami.
+
+Kod jest czytelniejszy.
+
+4. ResultSet – czytanie wyników
+
+ResultSet to obiekt, w którym są wyniki SELECT-a.
+
+while (rs.next()) {
+    String login = rs.getString("login");
+    int points = rs.getInt("points");
+    System.out.println(login + " → " + points);
+}
+
+
+rs.next() – przechodzi do kolejnego wiersza.
+
+getString("kolumna"), getInt("kolumna") – pobierają wartości.
+
+5. Transakcje
+
+Domyślnie każda zmiana w bazie wykonuje się od razu.
+Ale można grupować kilka operacji w jedną transakcję:
+
+conn.setAutoCommit(false);
+
+try {
+    // wiele zapytań
+    conn.commit();  // zatwierdź
+} catch (SQLException e) {
+    conn.rollback();  // wycofaj
+}
+
+
+📌 Przydatne, gdy np. chcesz przenieść punkty z jednego gracza do drugiego i upewnić się, że obie zmiany wejdą razem.
