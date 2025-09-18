@@ -1,0 +1,61 @@
+2. Własny wyjątek i jego użycie
+
+Idea (prosto):
+
+Wyjątek (exception) to sposób informowania, że coś poszło nie tak (błąd).
+
+Możesz stworzyć własny wyjątek, żeby jasno nazwać i obsłużyć specyficzny błąd Twojej aplikacji (np. InvalidAgeException).
+
+Różnica ważna:
+
+Checked exception (rozszerza Exception) trzeba deklarować w sygnaturze throws lub obsłużyć try / catch.
+
+Unchecked exception (rozszerza RuntimeException) nie trzeba deklarować — używaj, gdy błąd to błąd programisty (np. IllegalArgumentException).
+
+Kod: własny wyjątek (sprawdzony) i użycie
+// plik: InvalidAgeException.java
+public class InvalidAgeException extends Exception {
+    public InvalidAgeException(String message) {
+        super(message);
+    }
+}
+
+// plik: Person.java
+public class Person {
+    private int age;
+
+    public void setAge(int age) throws InvalidAgeException {
+        if (age < 0 || age > 150) {
+            // jeśli niepoprawny wiek — rzucamy własny wyjątek
+            throw new InvalidAgeException("Wiek musi być 0..150, podano: " + age);
+        }
+        this.age = age;
+    }
+}
+
+// plik: Main.java (obsługa wyjątku)
+public class Main {
+    public static void main(String[] args) {
+        Person p = new Person();
+        try {
+            p.setAge(-5);
+        } catch (InvalidAgeException e) {
+            System.out.println("Błąd: " + e.getMessage());
+        }
+    }
+}
+
+
+Wyjaśnienie:
+
+Tworzymy class InvalidAgeException extends Exception — to checked exception.
+
+setAge deklaruje throws InvalidAgeException — każdy, kto wywoła setAge, musi albo złapać wyjątek, albo przekazać dalej.
+
+W main używamy try/catch żeby złapać i obsłużyć błąd.
+
+Egzamin:
+
+Umieć napisać prosty wyjątek i pokazać throw i try/catch.
+
+Wiedzieć kiedy wyjątek powinien być checked, a kiedy unchecked.

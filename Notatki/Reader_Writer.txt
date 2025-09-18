@@ -1,0 +1,60 @@
+Odczyt i zapis do pliku tekstowego
+
+Idea (prosto):
+
+Plik tekstowy to zwykły ciąg linii. W Javie używamy Files, BufferedReader, BufferedWriter, PrintWriter.
+
+Używaj try-with-resources aby automatycznie zamykać strumienie.
+
+Pisanie (zapis) — prosty przykład:
+import java.nio.file.*;
+import java.nio.charset.StandardCharsets;
+import java.io.IOException;
+import java.util.List;
+
+public class FileWriteExample {
+    public static void main(String[] args) throws IOException {
+        Path path = Paths.get("data.txt");
+        List<String> lines = List.of("Ala", "Ola", "Jan");
+
+        // proste zapisanie wszystkich linii (nadpisze plik)
+        Files.write(path, lines, StandardCharsets.UTF_8);
+
+        // dopisywanie: Files.write(path, List.of("Nowy"), StandardOpenOption.APPEND);
+    }
+}
+
+Odczyt (czytanie) — prosty przykład:
+import java.nio.file.*;
+import java.nio.charset.StandardCharsets;
+import java.io.IOException;
+import java.util.List;
+
+public class FileReadExample {
+    public static void main(String[] args) throws IOException {
+        Path path = Paths.get("data.txt");
+        List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+        for (String line : lines) {
+            System.out.println(line);
+        }
+    }
+}
+
+Alternatywa z BufferedReader (linia-po-linii):
+try (BufferedReader br = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
+    String line;
+    while ((line = br.readLine()) != null) {
+        System.out.println(line);
+    }
+}
+
+
+Wskazówki praktyczne:
+
+Ścieżki względne (np. "data.txt") odnoszą się do katalogu, z którego uruchamiasz program. Na egzaminie lepiej podać prostą nazwę w katalogu projektu lub absolutną ścieżkę, jeśli masz pewność.
+
+Obsłuż IOException (rzeczywisty zapis/odczyt może się nie udać).
+
+Egzamin:
+
+Napisać program, który zapisuje kilka linii do pliku i później je odczytuje i wypisuje.

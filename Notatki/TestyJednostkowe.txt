@@ -1,0 +1,60 @@
+Proste testy jednostkowe (JUnit 5)
+
+Idea (prosto):
+
+Test jednostkowy sprawdza pojedynczą część programu (metodę) automatycznie.
+
+JUnit 5 używa adnotacji @Test, i assertów typu assertEquals, assertTrue, assertThrows.
+
+Przykład: test dodawania
+
+Kod klasy do testu:
+
+// plik: Calculator.java
+public class Calculator {
+    public int add(int a, int b) {
+        return a + b;
+    }
+}
+
+
+Test JUnit 5:
+
+// plik: CalculatorTest.java (w src/test/java)
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class CalculatorTest {
+    @Test
+    void testAdd() {
+        Calculator c = new Calculator();
+        assertEquals(5, c.add(2, 3), "2 + 3 should be 5");
+    }
+
+    @Test
+    void testAddNegative() {
+        Calculator c = new Calculator();
+        assertEquals(0, c.add(2, -2));
+    }
+}
+
+
+Jak uruchomić:
+
+W IDE: Run as JUnit test.
+
+Z Maven: mvn test.
+
+Z Gradle: ./gradlew test.
+
+Egzamin:
+
+Umieć napisać przynajmniej 1–2 testy: pozytywny przypadek i przypadek błędu (np. assertThrows dla wyjątku).
+
+Przykład assertThrows:
+
+@Test
+void testSetAgeInvalid() {
+    Person p = new Person();
+    assertThrows(InvalidAgeException.class, () -> p.setAge(-1));
+}

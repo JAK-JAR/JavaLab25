@@ -1,0 +1,72 @@
+Stworzenie serwera (niekoniecznie wielowątkowego)
+
+Idea (prosto):
+
+Serwer TCP otwiera port (ServerSocket) i czeka, aż klient się połączy (accept()).
+
+W wersji jednowątkowej serwer obsługuje klientów po kolei: przyjmie jednego, obsłuży go, zamknie połączenie, a dopiero potem obsłuży następnego. To proste i do egzaminu wystarczy.
+
+Minimalny jednowątkowy serwer (echo – odsyła to, co dostanie)
+import java.io.*;
+import java.net.*;
+
+public class SimpleServer {
+    public static void main(String[] args) throws IOException {
+        int port = 5555;
+        try (ServerSocket server = new ServerSocket(port)) {
+            System.out.println("Server listening on " + port);
+            while (true) {
+                // accept() blokuje do momentu, gdy klient się połączy
+                try (Socket client = server.accept();
+                     BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                     PrintWriter out = new PrintWriter(client.getOutputStream(), true)) {
+
+                    out.println("Welcome! Type a line and I will echo it. Type 'bye' to exit.");
+
+                    String line;
+                    while ((line = in.readLine()) != null) {
+                        if ("bye".equalsIgnoreCase(line.trim())) {
+                            out.println("Goodbye!");
+                            break;
+                        }
+                        out.println("Echo: " + line);
+                    }
+                } catch (IOException e) {
+                    System.err.println("Client handling error: " + e.getMessage());
+                    // pętla while(true) kontynuuje -> serwer pozostaje działający
+                }
+            }
+        }
+    }
+}
+
+Minimalny klient do testu:
+import java.io.*;
+import java.net.*;
+
+public class SimpleClient {
+    public static void main(String[] args) throws IOException {
+        try (Socket s = new Socket("127.0.0.1", 5555);
+             BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+             PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+             BufferedReader user = new BufferedReader(new InputStreamReader(System.in))) {
+
+            System.out.println(in.readLine()); // powitanie
+            out.println("Hello server");
+            System.out.println(in.readLine()); // odpowiedź serwera
+            out.println("bye");
+            System.out.println(in.readLine());
+        }
+    }
+}
+
+
+Wyjaśnienie:
+
+ServerSocket server = new ServerSocket(port) — otwiera port do nasłuchu.
+
+server.accept() — czeka na klienta. Zwraca Socket dla tego klienta.
+
+W przykładzie używamy try-with-resources dla Socket, BufferedReader, PrintWriter, żeby zasoby były automatycznie zamknięte.
+
+Jednowątkowość: serwer dopiero po zakończeniu obsługi klienta wraca do accept() i przyjmie kolejnego.
