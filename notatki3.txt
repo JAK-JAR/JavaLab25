@@ -1,0 +1,159 @@
+1️⃣ Własny wyjątek
+Teoria
+
+Wyjątek to obiekt, który sygnalizuje błąd lub nietypową sytuację.
+
+W Javie są wyjątki wbudowane (np. NullPointerException) oraz własne (tworzymy sami).
+
+Aby stworzyć własny wyjątek:
+
+Tworzymy klasę, która dziedziczy po Exception (jeśli ma być checked) albo po RuntimeException (jeśli ma być unchecked).
+
+Można w nim dodać własny komunikat.
+
+Kod
+// Własny wyjątek (checked - czyli trzeba go obsłużyć)
+public class InvalidAgeException extends Exception {
+    // Konstruktor przyjmujący komunikat
+    public InvalidAgeException(String message) {
+        super(message);
+    }
+}
+
+
+Użycie:
+
+public class Person {
+    private String name;
+    private int age;
+
+    public Person(String name, int age) throws InvalidAgeException {
+        if (age < 0) {
+            // Rzucamy własny wyjątek
+            throw new InvalidAgeException("Wiek nie może być ujemny!");
+        }
+        this.name = name;
+        this.age = age;
+    }
+}
+
+2️⃣ Testy jednostkowe (JUnit)
+Teoria
+
+Test jednostkowy sprawdza pojedynczy kawałek kodu (np. metodę).
+
+W Javie najczęściej używamy JUnit 5.
+
+Struktura testu:
+
+Adnotacja @Test przed metodą.
+
+Używamy metod z org.junit.jupiter.api.Assertions, np. assertEquals, assertThrows.
+
+Kod
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class PersonTest {
+
+    @Test
+    public void testValidAge() throws InvalidAgeException {
+        Person p = new Person("Adam", 20);
+        assertEquals(20, p.age); // Sprawdza czy wiek = 20
+    }
+
+    @Test
+    public void testInvalidAge() {
+        // Sprawdzamy czy zostanie rzucony wyjątek
+        assertThrows(InvalidAgeException.class, () -> {
+            new Person("Ewa", -5);
+        });
+    }
+}
+
+3️⃣ Odczyt i zapis do pliku
+Teoria
+
+Plik tekstowy można otworzyć w Javie przy pomocy klas z pakietu java.io lub java.nio.file.
+
+Najprościej:
+
+Zapis → FileWriter albo Files.writeString.
+
+Odczyt → Scanner albo Files.readAllLines.
+
+Trzeba pamiętać, żeby zamykać pliki (close()) albo używać try-with-resources.
+
+Kod
+import java.io.*;
+import java.util.*;
+
+public class FileExample {
+    public static void main(String[] args) {
+        String filename = "data.txt";
+
+        // --- ZAPIS ---
+        try (FileWriter writer = new FileWriter(filename)) {
+            writer.write("Hello World\n");
+            writer.write("Java zapis do pliku\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // --- ODCZYT ---
+        try (Scanner scanner = new Scanner(new File(filename))) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                System.out.println("Odczytano: " + line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+4️⃣ Prosty serwer (jednowątkowy)
+Teoria
+
+Serwer to program, który nasłuchuje na określonym porcie.
+
+W Javie używamy klasy ServerSocket.
+
+ServerSocket czeka na połączenie, a po połączeniu daje Socket, z którego czytamy/piszemy dane.
+
+Tu będzie jednowątkowy – obsłuży jednego klienta na raz.
+
+Kod
+import java.io.*;
+import java.net.*;
+
+public class SimpleServer {
+    public static void main(String[] args) {
+        int port = 12345; // wybieramy port
+
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            System.out.println("Serwer uruchomiony na porcie " + port);
+
+            // Serwer działa w pętli
+            while (true) {
+                Socket clientSocket = serverSocket.accept(); // czeka na klienta
+                System.out.println("Klient połączony!");
+
+                // Strumienie komunikacji
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(clientSocket.getInputStream()));
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+                // Proste powitanie
+                out.println("Witaj na serwerze! Podaj swoje imię:");
+
+                String name = in.readLine(); // czekamy na odpowiedź klienta
+                out.println("Witaj, " + name + "!");
+
+                clientSocket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
